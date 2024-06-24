@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D myBody;
     private Animator anim;
+   
     void Awake(){
     myBody = GetComponent<Rigidbody2D> ();
     anim = GetComponent<Animator> () ;
@@ -18,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-
 
 
 
@@ -34,8 +34,43 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    void MyMove(){
+    void FixedUpdate()
+    {
+        PlayerWalk();
+       
+    }
+    void PlayerWalk(){
+            float h = Input.GetAxisRaw("Horizontal");
+            print("valu is " + h );
+
+          if (h>0)
+          {
+                myBody.velocity =  new Vector2 ( speed ,myBody.velocity.y);
+                //speed is x and velocity.y is y 
+                //go to right side 
+                ChangeDirection(1);
+          } else if (h<0){
+                myBody.velocity =  new Vector2 ( -speed ,myBody.velocity.y);
+                //go to left side 
+                ChangeDirection(-1);
+
+
+          } else{
+
+            myBody.velocity= new Vector2(0f,myBody.velocity.y);
+
+          }
+          anim.SetInteger ("Speed", Mathf.Abs((int)myBody.velocity.x));
     }
 
+    void ChangeDirection(int direction)
+    {
+        Vector3 tempScale = transform.localScale;
+        tempScale.x = direction;
+        transform.localScale = tempScale;
+
+
+
+    }
 
 }
