@@ -11,7 +11,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D myBody;
     private Animator anim;
-   
+
+
+    public Transform groundCheckPosition;
+    public LayerMask groundLayer;
     void Awake(){
     myBody = GetComponent<Rigidbody2D> ();
     anim = GetComponent<Animator> () ;
@@ -31,7 +34,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Physics2D.Raycast(groundCheckPosition.position, Vector2.down, 0.5f,groundLayer))
+        {
+            print("Collided with ground");
+        }
     }
 
     void FixedUpdate()
@@ -41,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void PlayerWalk(){
             float h = Input.GetAxisRaw("Horizontal");
-            print("valu is " + h );
+            // print("valu is " + h );
 
           if (h>0)
           {
@@ -71,6 +77,34 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    }
+
+    void OnCollisionEnter2D(Collision2D target)
+    {
+        //
+        // if (target.gameObject.tag == "Ground")
+        // {
+        //
+        //     print("collided with Ground");
+        //
+        //
+        // }
+
+    }
+     //Other way
+    void OnTriggerEnter2D(Collider2D target)
+    {
+
+        // if (target.tag == "Ground")
+        // {
+        //     print("Collided with tag");
+        //
+        //
+        //
+        // }
+        
+        
+        
     }
 
 }
