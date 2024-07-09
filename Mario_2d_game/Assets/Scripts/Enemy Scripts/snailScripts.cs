@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
@@ -54,6 +55,19 @@ public class NewBehaviourScript : MonoBehaviour
         CheckCollision();    
 
     }
+    
+    
+    
+    IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
+        
+
+
+
+
+    }
 
     void CheckCollision()
     {
@@ -72,9 +86,20 @@ public class NewBehaviourScript : MonoBehaviour
                     canMove = false;
                  
                     myBody.velocity = new Vector2(0, 0);
-                    anim.Play("stunned");
+                    anim.Play("Stunned");
                     stunned = true ; 
+                    // Beetle coode here
+                   
+                    
+                    
+                    if (tag == MyTags.Beetle_tag)
+                    {
+                        anim.Play("Stunned");
+                        StartCoroutine(Dead());
 
+
+
+                    }
                 }
                 
                 
@@ -98,10 +123,11 @@ public class NewBehaviourScript : MonoBehaviour
                     
                 }
                 else
-                {
-                    myBody.velocity = new Vector2(15f, myBody.velocity.y);
+                { if(tag !=MyTags.Beetle_tag)
+                    {
+                        myBody.velocity = new Vector2(15f, myBody.velocity.y);
+                    }
                 }
-                
             }
             
             
@@ -117,8 +143,10 @@ public class NewBehaviourScript : MonoBehaviour
                     
                 }
                 else
-                {
-                    myBody.velocity = new Vector2(-15f, myBody.velocity.y);
+                { if(tag !=MyTags.Beetle_tag)
+                    {
+                        myBody.velocity = new Vector2(-15f, myBody.velocity.y);
+                    }
                 }
             }
             
@@ -171,6 +199,9 @@ public class NewBehaviourScript : MonoBehaviour
     //         anim.Play("stunned");
     //     }
     // }
+
+
+   
 }
 
 
