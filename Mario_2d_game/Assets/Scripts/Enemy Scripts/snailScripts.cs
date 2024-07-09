@@ -10,12 +10,20 @@ public class NewBehaviourScript : MonoBehaviour
     private Rigidbody2D myBody;
     private Animator anim;
     private bool moveLeft;
-    public Transform down_Collision;
 
+    private bool canMove;
+    private bool stunned;
+    public Transform down_Collision ,left_Collision,right_Collision,Top_Collision;
+    private Vector3 left_Collision_Position, right_Collision_Position;
+    public LayerMask playerLayer;
     void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        left_Collision_Position = left_Collision.position;
+        right_Collision_Position = right_Collision.position;
+
     }
 
 
@@ -23,20 +31,24 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         moveLeft = true ;
+        canMove = true;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (moveLeft)
+        if (canMove)
         {
-            myBody.velocity = new Vector2(-moveSpeed, myBody.velocity.y);
-        }
-        else
-        {
-            myBody.velocity = new Vector2 (moveSpeed, myBody.velocity.y);
-            
+            if (moveLeft)
+            {
+                myBody.velocity = new Vector2(-moveSpeed, myBody.velocity.y);
+            }
+            else
+            {
+                myBody.velocity = new Vector2(moveSpeed, myBody.velocity.y);
+
+            }
         }
 
         CheckCollision();    
@@ -45,7 +57,80 @@ public class NewBehaviourScript : MonoBehaviour
 
     void CheckCollision()
     {
+        RaycastHit2D lefthit = Physics2D.Raycast(left_Collision.position, Vector2.left, 0.1f, playerLayer);
+        RaycastHit2D righthit = Physics2D.Raycast(right_Collision.position, Vector2.right, 0.1f, playerLayer);
 
+        Collider2D tophit = Physics2D.OverlapCircle(Top_Collision.position, 0.2f, playerLayer);
+
+        if (tophit != null) {
+            if (tophit.gameObject.tag == MyTags.PLAYER_TAG)
+            {
+                if (!stunned)
+                {
+                    tophit.gameObject.GetComponent<Rigidbody2D>().velocity =
+                        new Vector2(tophit.gameObject.GetComponent<Rigidbody2D>().velocity.x, 7f);
+                    canMove = false;
+                 
+                    myBody.velocity = new Vector2(0, 0);
+                    anim.Play("stunned");
+                    stunned = true ; 
+
+                }
+                
+                
+                
+            }
+            
+            
+            
+            
+            
+        }
+
+        if (lefthit)
+        {
+            if (lefthit.collider.gameObject.tag == MyTags.PLAYER_TAG)
+            {
+                if (!stunned)
+                {
+                    //Apply Damage to player
+                    print("Damage left");
+                    
+                }
+                else
+                {
+                    myBody.velocity = new Vector2(15f, myBody.velocity.y);
+                }
+                
+            }
+            
+            
+        }
+
+        if (righthit)
+        {
+            if (righthit.collider.gameObject.tag == MyTags.PLAYER_TAG)
+            {
+                if (!stunned)
+                {
+                    print("Damage Right");
+                    
+                }
+                else
+                {
+                    myBody.velocity = new Vector2(-15f, myBody.velocity.y);
+                }
+            }
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
         if (!Physics2D.Raycast(down_Collision.position, Vector2.down, 0.1f))
         {
            ChangeDiraction();
@@ -62,18 +147,30 @@ public class NewBehaviourScript : MonoBehaviour
         {
             tempScale.x = Math.Abs(tempScale.x);
             //positive valu x like 2
+
+            left_Collision.position = left_Collision_Position;
+            right_Collision.position = right_Collision_Position;
             
+
         }
         else
         {
             tempScale.x = -Math.Abs(tempScale.x);
             //negative valu x like -2 
+            left_Collision.position = right_Collision_Position;
+            right_Collision.position = left_Collision_Position;   
         }
 
         transform.localScale = tempScale;
     }
-        
-    
+
+    // private void OnCollisionEnter2D(Collision2D target)
+    // {
+    //     if (target.gameObject.tag=="Player")
+    //     {
+    //         anim.Play("stunned");
+    //     }
+    // }
 }
 
 
