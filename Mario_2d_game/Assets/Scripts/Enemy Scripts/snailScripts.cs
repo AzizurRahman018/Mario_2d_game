@@ -86,7 +86,7 @@ public class NewBehaviourScript : MonoBehaviour
                     canMove = false;
                  
                     myBody.velocity = new Vector2(0, 0);
-                    anim.Play("Stunned");
+                    anim.Play("stunned");
                     stunned = true ; 
                     // Beetle coode here
                    
@@ -94,7 +94,7 @@ public class NewBehaviourScript : MonoBehaviour
                     
                     if (tag == MyTags.Beetle_tag)
                     {
-                        anim.Play("Stunned");
+                        anim.Play("stunned");
                         StartCoroutine(Dead());
 
 
