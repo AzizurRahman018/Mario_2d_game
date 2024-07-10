@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Helper SScripts\MyTags.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Player Scripts\FireBullet.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\snailScripts.cs" />
+    <Compile Include="Assets\Scripts\Player Scripts\PlayerShoot.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

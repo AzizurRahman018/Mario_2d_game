@@ -58,9 +58,9 @@ public class NewBehaviourScript : MonoBehaviour
     
     
     
-    IEnumerator Dead()
+    IEnumerator Dead(float timer)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(timer);
         gameObject.SetActive(false);
         
 
@@ -95,7 +95,7 @@ public class NewBehaviourScript : MonoBehaviour
                     if (tag == MyTags.Beetle_tag)
                     {
                         anim.Play("stunned");
-                        StartCoroutine(Dead());
+                        StartCoroutine(Dead(0.5f));
 
 
 
@@ -126,6 +126,7 @@ public class NewBehaviourScript : MonoBehaviour
                 { if(tag !=MyTags.Beetle_tag)
                     {
                         myBody.velocity = new Vector2(15f, myBody.velocity.y);
+                        StartCoroutine(Dead(3f));
                     }
                 }
             }
@@ -146,6 +147,8 @@ public class NewBehaviourScript : MonoBehaviour
                 { if(tag !=MyTags.Beetle_tag)
                     {
                         myBody.velocity = new Vector2(-15f, myBody.velocity.y);
+                        StartCoroutine(Dead(3f));
+
                     }
                 }
             }
