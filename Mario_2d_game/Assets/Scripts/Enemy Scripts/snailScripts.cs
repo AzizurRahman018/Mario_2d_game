@@ -195,13 +195,52 @@ public class NewBehaviourScript : MonoBehaviour
         transform.localScale = tempScale;
     }
 
-    // private void OnCollisionEnter2D(Collision2D target)
-    // {
-    //     if (target.gameObject.tag=="Player")
-    //     {
-    //         anim.Play("stunned");
-    //     }
-    // }
+    void OnTriggerEnter2D(Collider2D target)
+    {
+    
+        if (target.tag == MyTags.BULLET_tag)
+
+        {
+            if (tag==MyTags.Beetle_tag)
+            {
+              anim.Play("stunned");
+              canMove = false;
+              myBody.velocity = new Vector2(0, 0);
+
+
+              StartCoroutine(Dead(0.4f));
+
+
+
+
+            }
+
+            if (tag == MyTags.SNAIL_tag)
+            {
+                if (!stunned)
+                {
+                    anim.Play("stunned");
+                    stunned = true;
+                    canMove = false;
+                    myBody.velocity = new Vector2(0, 0);
+                    
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
+                
+                
+                
+                
+                
+                
+            }
+        }
+        
+        
+        
+    }
 
 
    

@@ -5,8 +5,8 @@ using UnityEngine;
 public class MyTags : MonoBehaviour
 {
     public static string PLAYER_TAG = "Player";
-
+    public static string BULLET_tag  = "Bullet";
     public static string Beetle_tag  = "Beetle";
-    public static string SNAIL_tag = "Snail";
+    public static string SNAIL_tag = "snail";
 
 }
