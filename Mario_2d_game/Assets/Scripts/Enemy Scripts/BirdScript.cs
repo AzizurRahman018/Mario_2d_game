@@ -41,6 +41,7 @@ public class BirdScript : MonoBehaviour
     void Update()
     {
         MoveTheBird();
+        DropTheEgg();
     }
 
     void MoveTheBird()
@@ -78,12 +79,15 @@ public class BirdScript : MonoBehaviour
     {
         if (!attacked)
         {
-            if (Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity))
+            if (Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity,playerLayer))
             {
-                Instantiate(birdEggg,new Vector3(transform.position.x,transform.position.y-1f,transform.position.z))
-                
-                
-                
+                Instantiate(birdEggg,
+                    new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z),
+                    Quaternion.identity);
+
+                attacked = true;
+                anim.Play("BirdFly");
+
             }
             
             
